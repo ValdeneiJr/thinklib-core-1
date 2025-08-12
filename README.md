@@ -17,7 +17,7 @@ In Unity: **Window → Package Manager → + → Add package from Git URL…**
 Use:
 
 ```txt
-https://github.com/LibraryThinklib/thinklib-core.git#v0.1.2
+https://github.com/LibraryThinklib/thinklib-core.git#v0.1.3
 ```
 
 ## How to use (Editor menus)
