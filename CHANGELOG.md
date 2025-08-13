@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.4 — 2025-08-13
+
+* **Novo:** menu **Thinklib → Import Resources** que importa os **prefabs** disponibilizados pela lib para `Assets/Thinklib/Resources/Prefabs` (somente `.prefab`, dependências continuam apontando para os assets do pacote).
+* **Change:** reorganização dos prefabs em `Runtime/Resources/Prefabs/...` e atualização das referências internas para usar assets do próprio pacote (sprites, materials, anims etc.).
+* **Fix:** eliminação de conflitos de **GUID** e de **Missing (Mono Script)** ao importar recursos — o importador ignora `.cs/.asmdef/.asmref`, evitando duplicar código no `Assets/`.
+* **DX:** importação silenciosa (sem diálogos), com log simples no Console indicando a quantidade de prefabs importados.
+
 ## 0.1.3 — 2025-08-12
 
 * **Fix:** erros de compilação (**CS1671**) corrigidos ao mover atributos (`AddComponentMenu`, `RequireComponent` etc.) **para dentro** dos `namespace` nos scripts:

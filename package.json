@@ -1,7 +1,7 @@
 {
   "name": "com.thinklib.core",
   "displayName": "Thinklib Core",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "unity": "2022.3",
   "description": "Library of mechanics and utilities for games (Platformer, Topdown, and Point & Click).",
   "keywords": [
@@ -13,7 +13,7 @@
   ],
   "author": {
     "name": "Thinklib Team",
-    "email": "contato@thinklib.com",
+    "email": "thinkted@uea.edu.br",
     "url": "https://github.com/LibraryThinklib"
   },
   "repository": {
