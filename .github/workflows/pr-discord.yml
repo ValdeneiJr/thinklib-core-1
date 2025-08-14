@@ -1,0 +1,51 @@
+name: Notificar PR no Discord
+
+on:
+  pull_request:
+    types: [opened]
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Preparar mensagem
+        id: msg
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          URL="${{ github.event.pull_request.html_url }}"
+          AUTHOR="${{ github.event.pull_request.user.login }}"
+          BASE="${{ github.event.pull_request.base.ref }}"
+          HEAD="${{ github.event.pull_request.head.ref }}"
+          NUMBER="${{ github.event.pull_request.number }}"
+          REPO="${{ github.repository }}"
+
+          STATUS="🚀 Nova PR"
+
+          cat > payload.json <<EOF
+          {
+            "thread_name": "${STATUS}: ${TITLE} #${NUMBER}",
+            "embeds": [
+              {
+                "title": "${STATUS}: ${TITLE} #${NUMBER}",
+                "url": "${URL}",
+                "description": "Autor: **${AUTHOR}**\\nBranches: \`${HEAD}\` → \`${BASE}\`",
+                "fields": [
+                  { "name": "Ação", "value": "\`opened\`", "inline": true },
+                  { "name": "Repositório", "value": "\`${REPO}\`", "inline": true }
+                ]
+              }
+            ],
+            "allowed_mentions": { "parse": [] }
+          }
+          EOF
+
+          echo "Payload construído:"
+          cat payload.json
+
+      - name: Enviar para Discord (canal de Fórum)
+        run: |
+          curl -sS -H "Content-Type: application/json" \
+               -d @payload.json \
+               "${{ secrets.DISCORD_WEBHOOK }}?wait=true"
