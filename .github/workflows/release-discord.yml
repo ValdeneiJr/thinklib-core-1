@@ -1,0 +1,50 @@
+name: Notificar release no Discord
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Montar payload (jq)
+        run: |
+          TITLE="${{ github.event.release.name }}"
+          TAG="${{ github.event.release.tag_name }}"
+          URL="${{ github.event.release.html_url }}"
+          BODY="${{ github.event.release.body }}"
+          AUTHOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+
+          # usa jq pra escapar JSON corretamente (corpo com quebras/aspas)
+          jq -n \
+            --arg thread "📦 Nova Release: ${TITLE:-$TAG} (${TAG})" \
+            --arg title  "📦 Nova Release: ${TITLE:-$TAG} (${TAG})" \
+            --arg url    "$URL" \
+            --arg desc   "Publicada por **$AUTHOR** no repositório \`$REPO\`" \
+            --arg body   "${BODY}" \
+            '{
+              thread_name: $thread,
+              embeds: [
+                {
+                  title: $title,
+                  url: $url,
+                  description: $desc,
+                  fields: [
+                    { "name": "Notas da release", "value": ( $body | if . == "" then "_Sem notas_" else . end ) }
+                  ]
+                }
+              ],
+              allowed_mentions: { parse: [] }
+            }' > payload.json
+
+          echo "Payload:"
+          cat payload.json
+
+      - name: Enviar para Discord (canal Fórum de Releases)
+        run: |
+          curl -sS -H "Content-Type: application/json" \
+               -d @payload.json \
+               "${{ secrets.DISCORD_WEBHOOK_RELEASES }}?wait=true"
