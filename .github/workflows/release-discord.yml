@@ -2,8 +2,11 @@ name: Notificar release no Discord
 
 on:
   release:
-    types: [published, edited]
+    types: [published, edited, created, prereleased, released]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   notify:
@@ -11,37 +14,26 @@ jobs:
     steps:
       - name: Montar payload (jq)
         run: |
+          sudo apt-get update -y && sudo apt-get install -y jq
           TITLE="${{ github.event.release.name }}"
           TAG="${{ github.event.release.tag_name }}"
           URL="${{ github.event.release.html_url }}"
           BODY="${{ github.event.release.body }}"
-          AUTHOR="${{ github.actor }}"
+          AUTHOR="${{ github.event.release.author.login }}"
           REPO="${{ github.repository }}"
 
-          # usa jq pra escapar JSON corretamente (corpo com quebras/aspas)
           jq -n \
             --arg thread "📦 Nova Release: ${TITLE:-$TAG} (${TAG})" \
             --arg title  "📦 Nova Release: ${TITLE:-$TAG} (${TAG})" \
             --arg url    "$URL" \
             --arg desc   "Publicada por **$AUTHOR** no repositório \`$REPO\`" \
-            --arg body   "${BODY}" \
+            --arg body   "${BODY:-_Sem notas_}" \
             '{
               thread_name: $thread,
-              embeds: [
-                {
-                  title: $title,
-                  url: $url,
-                  description: $desc,
-                  fields: [
-                    { "name": "Notas da release", "value": ( $body | if . == "" then "_Sem notas_" else . end ) }
-                  ]
-                }
-              ],
+              embeds: [{ title: $title, url: $url, description: $desc,
+                         fields: [{name:"Notas da release", value:$body}] }],
               allowed_mentions: { parse: [] }
             }' > payload.json
-
-          echo "Payload:"
-          cat payload.json
 
       - name: Enviar para Discord (canal Fórum de Releases)
         run: |
