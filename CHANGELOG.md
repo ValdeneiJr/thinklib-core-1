@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.5 — 2025-08-15
+
+* **Novo:** adicionados mais **prefabs** de inimigos:
+  * **Patroller** (patrulheiro)
+  * **Shooter** (atirador)
+  * **Patrol** (variação de patrulha)
+  * **Sniper** (franco-atirador)
+* Prefabs seguem o padrão de organização e referências internas da biblioteca, compatíveis com o sistema de importação via **Thinklib → Import Resources**.
+
 ## 0.1.4 — 2025-08-13
 
 * **Novo:** menu **Thinklib → Import Resources** que importa os **prefabs** disponibilizados pela lib para `Assets/Thinklib/Resources/Prefabs` (somente `.prefab`, dependências continuam apontando para os assets do pacote).
