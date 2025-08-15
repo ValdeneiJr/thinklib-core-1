@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.6 — 2025-08-15
+* **Fix:** resolução de problemas de missing scripts em novos prefabs.
+
 ## 0.1.5 — 2025-08-15
 
 * **Novo:** adicionados mais **prefabs** de inimigos:
