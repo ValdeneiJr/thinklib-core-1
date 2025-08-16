@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11 — 2025-08-15
+* **Style:** melhorias de estilização no `README.md` para torná-lo mais agradável e informativo para o usuário.
+* **Chore:** remoção de arquivos `.meta` desnecessários fora da pasta `Assets/`.
+
 ## 0.1.10 — 2025-08-15
 * **Style:** melhorias de estilização no `README.md` para torná-lo mais agradável e informativo para o usuário.
 * **Chore:** remoção de arquivos `.meta` desnecessários fora da pasta `Assets/`.
