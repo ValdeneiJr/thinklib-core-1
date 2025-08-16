@@ -2,7 +2,7 @@ name: Notificar release no Discord
 
 on:
   release:
-    types: [published]
+    types: [created, released]
   workflow_dispatch:
 
 permissions:
