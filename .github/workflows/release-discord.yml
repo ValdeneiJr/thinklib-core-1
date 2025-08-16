@@ -18,7 +18,8 @@ jobs:
           TITLE="${{ github.event.release.name }}"
           TAG="${{ github.event.release.tag_name }}"
           URL="${{ github.event.release.html_url }}"
-          BODY="${{ github.event.release.body }}"
+          # Escapa o corpo da release para string JSON segura
+          BODY=$(echo "${{ github.event.release.body }}" | jq -Rs .)
           AUTHOR="${{ github.event.release.author.login }}"
           REPO="${{ github.repository }}"
 
@@ -27,7 +28,7 @@ jobs:
             --arg title  "📦 Nova Release: ${TITLE:-$TAG} (${TAG})" \
             --arg url    "$URL" \
             --arg desc   "Publicada por **$AUTHOR** no repositório \`$REPO\`" \
-            --arg body   "${BODY:-_Sem notas_}" \
+            --argjson body "$BODY" \
             '{
               thread_name: $thread,
               embeds: [{ title: $title, url: $url, description: $desc,
