@@ -1,4 +1,14 @@
 # Changelog
+
+## 0.1.17 — 2025-09-01
+* **Novo:** adição do menu **Thinklib → Point and Click**, com categorias de componentes para **Dropzone**, **Graph** e **Inventory**:
+  * Scripts atualizados com `AddComponentMenu` / `CreateAssetMenu` para aparecerem no menu **Component → Thinklib → Point and Click → …**.
+  * Organização interna dos scripts em subpastas lógicas (Dropzone, Graph e Inventory).
+* **UX:** padronização de nomes de menu conforme os arquivos originais, garantindo consistência entre código e interface.
+* **Fix:** corrigido uso incorreto de argumentos no atributo `[CreateAssetMenu]` em `Item` e `CombinationRecipe`, que causava erros de compilação (**CS1016**, **CS1729**) ao importar o pacote.
+* **Chore:** pequenas revisões no código para unificação do estilo e estrutura dos atributos `[AddComponentMenu]` e `[CreateAssetMenu]`.
+
+
 ## 0.1.16 — 2025-09-01
 * **Novo:** adição do menu **Thinklib → Point and Click**, com categorias de componentes para **Dropzone**, **Graph** e **Inventory**:
   * Scripts atualizados com `AddComponentMenu` / `CreateAssetMenu` para aparecerem no menu **Component → Thinklib → Point and Click → …**.
